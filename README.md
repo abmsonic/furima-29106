@@ -16,13 +16,12 @@
 ### Association
 
 - has_many :items
-- has_many :purchase
+- has_many :purchases
 
 ## items テーブル
 
 | Column              | Type       | Options                        |
 | ------------------- | ---------- | ------------------------------ |
-| image               | string     | null: false                    |
 | name                | string     | null: false                    |
 | info                | text       | null: false                    |
 | category_id         | integer    | null: false                    |
@@ -56,6 +55,7 @@
 | postal_code   | string      | null: false                    |
 | prefecture_id | integer     | null: false                    |
 | city          | string      | null: false                    |
+| house_number  | string      | null: false                    |
 | building      | string      |                                |
 | phone_number  | string      | null: false                    |
 | purchase      | references  | null: false, foreign_key: true |
