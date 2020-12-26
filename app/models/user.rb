@@ -6,7 +6,6 @@ class User < ApplicationRecord
 
   validates :nickname, presence: true
   validates :birthday, presence: true 
-  validates :password, length: { minimum: 6 }
   with_options presence: true, format: { with: /\A[ぁ-んァ-ヶ一-龥々]+\z/, message: 'Full-width characters' } do
     validates :first_name
     validates :last_name
