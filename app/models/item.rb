@@ -1,5 +1,6 @@
 class Item < ApplicationRecord
   belongs_to :user
+  has_one_attached :image
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :category
   belongs_to :status
@@ -9,6 +10,7 @@ class Item < ApplicationRecord
 
   with_options presence: true do
     validates :name
+    validates :image
     validates :info
     validates :category_id
     validates :status_id
@@ -17,8 +19,10 @@ class Item < ApplicationRecord
     validates :user_id
   end
 
+  validates :price, format: { with: /\A[0-9]+\z/, message: 'Half-width number'}
   validates :price, numericality: { greater_than_or_equal_to: 300,
-     less_than_or_equal_to: 9999999
+     less_than_or_equal_to: 9999999,
+     message: 'Out of setting range'
      }
 
   validates :category_id, numericality: { other_than: 1 }
