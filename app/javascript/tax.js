@@ -5,7 +5,8 @@ window.addEventListener('load', () => {
 
   priceInput.addEventListener("input", () => {
     const inputValue = priceInput.value;
-    addTaxDom.innerHTML = Math.floor(inputValue) * 0.1
-    salesProfit.innerHTML = Math.floor(inputValue) * 0.9
+    addTaxDom.innerHTML = Math.floor(inputValue * 0.1 )
+    salesProfit.innerHTML = (inputValue - addTaxDom.innerHTML).toLocaleString('ja-JP');
+    addTaxDom.innerHTML = Math.floor(inputValue * 0.1 ).toLocaleString('ja-JP');
   })
 });
