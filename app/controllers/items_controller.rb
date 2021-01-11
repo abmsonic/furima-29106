@@ -1,5 +1,6 @@
 class ItemsController < ApplicationController
   before_action :move_to_session, except: [:index, :show]
+  before_action :set_item, only: [:show, :edit, :update]
   before_action :correct_user, only: [:edit, :update]
 
   def index
@@ -45,8 +46,11 @@ class ItemsController < ApplicationController
     redirect_to new_user_session_path unless user_signed_in?
   end
 
-  def correct_user
+  def set_item
     @item = Item.find(params[:id])
+  end
+
+  def correct_user
     unless current_user.id == @item.user.id
       redirect_to root_path
     end
