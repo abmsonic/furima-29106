@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :items
+  has_many :purchases
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   with_options presence: true do
