@@ -1,4 +1,7 @@
 class OrdersController < ApplicationController
+  before_action :move_to_session, only: :index
+  before_action :correct_user, only: :index
+  before_action :buy_out, only: :index
   def index
     @item = Item.find(params[:item_id])
     @order = Order.new
@@ -17,6 +20,18 @@ class OrdersController < ApplicationController
   end
 
   private
+
+  def move_to_session
+    redirect_to new_user_session_path unless user_signed_in?
+  end
+
+  def correct_user
+    redirect_to root_path if current_user.id == Item.find(params[:item_id]).user.id
+  end
+
+  def buy_out
+    redirect_to root_path unless Item.find(params[:item_id]).purchase == nil
+  end
 
   def order_params
     params.require(:order).permit(:postal_code, :prefecture_id, :city, :house_number, :building, :phone_number).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
