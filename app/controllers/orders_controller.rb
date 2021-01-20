@@ -2,8 +2,9 @@ class OrdersController < ApplicationController
   before_action :move_to_session, only: :index
   before_action :correct_user, only: :index
   before_action :buy_out, only: :index
+  before_action :set_item
+
   def index
-    @item = Item.find(params[:item_id])
     @order = Order.new
   end
 
@@ -14,12 +15,15 @@ class OrdersController < ApplicationController
       @order.save
       redirect_to root_path
     else
-      @item = Item.find(params[:item_id])
       render :index
     end
   end
 
   private
+
+  def set_item
+    @item = Item.find(params[:item_id])
+  end
 
   def move_to_session
     redirect_to new_user_session_path unless user_signed_in?
@@ -40,7 +44,7 @@ class OrdersController < ApplicationController
   def pay_item
     Payjp.api_key = ENV['PAYJP_SECRET_KEY']
     Payjp::Charge.create(
-      amount: Item.find(@order.item_id).price,
+      amount: @item.price,
       card: order_params[:token],
       currency: 'jpy'
     )
